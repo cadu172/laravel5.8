@@ -31,6 +31,9 @@ Route::prefix('06_controladores')->group(function(){
     Route::get('nome',[MeuControlador::class, 'getNome']);
     Route::get('multiplicar/{p1}/{p2}',[MeuControlador::class, 'multiplicar']);
 
+    //rota para o controlador ClienteControlador
+    route::resource('cliente','ClienteControlador');
+
 
 });
 
