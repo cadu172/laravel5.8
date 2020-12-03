@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\Return_;
 
 class ClienteControlador extends Controller
 {
@@ -21,7 +22,11 @@ class ClienteControlador extends Controller
      */
     public function index()
     {
+        
+        $clientes = $this->arrayClientes;
+        
         //
+        return view('clientes.index', compact(['clientes']));
     }
 
     /**
@@ -32,6 +37,7 @@ class ClienteControlador extends Controller
     public function create()
     {
         //
+        return view("clientes.create");
     }
 
     /**
@@ -42,7 +48,24 @@ class ClienteControlador extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // cria um novo registro com detalhes do formulário
+        $novo_cliente = [
+            'id' => count($this->arrayClientes)+1,
+            'nome' => $request->nome
+        ];
+
+        // adiciona ao array principal o novo cliente
+        $this->arrayClientes[] = $novo_cliente;
+
+        // parametro para a lista de clientes cadastrados
+        $clientes = $this->arrayClientes;
+
+        // imprime o array (debug)
+        //dd($this->arrayClientes);
+        return view("clientes.index", compact(['clientes']));
+
+        //return redirect()->route("clientes.index");
+
     }
 
     /**

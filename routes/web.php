@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\http\Request;
 use App\Http\Controllers\MeuControlador;
+use App\Http\Controllers\ClienteControlador;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +33,7 @@ Route::prefix('06_controladores')->group(function(){
     Route::get('multiplicar/{p1}/{p2}',[MeuControlador::class, 'multiplicar']);
 
     //rota para o controlador ClienteControlador
-    route::resource('cliente','ClienteControlador');
+    route::resource('clientes',ClienteControlador::class);
 
 
 });
