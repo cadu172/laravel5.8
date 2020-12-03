@@ -14,6 +14,16 @@ class ClienteControlador extends Controller
         ['id'=>1, 'nome'=>'dos Santos'],
         ['id'=>1, 'nome'=>'Roberto']
     ];
+
+    public function __construct() {
+        
+        $clientes = session('clientes');
+        
+        if ( ! isset($clientes) )
+        {
+            session(['clientes' => $this->arrayClientes]);
+        }
+    }
     
     /**
      * Display a listing of the resource.
@@ -23,7 +33,10 @@ class ClienteControlador extends Controller
     public function index()
     {
         
-        $clientes = $this->arrayClientes;
+        //$clientes = $this->arrayClientes;
+        $clientes = session('clientes');
+
+        //dd($clientes);
         
         //
         return view('clientes.index', compact(['clientes']));
@@ -48,23 +61,29 @@ class ClienteControlador extends Controller
      */
     public function store(Request $request)
     {
+        // obtem os dados da sessao
+        $clientes = session('clientes');
+        
         // cria um novo registro com detalhes do formulário
         $novo_cliente = [
-            'id' => count($this->arrayClientes)+1,
+            'id' => count($clientes)+1,
             'nome' => $request->nome
         ];
 
         // adiciona ao array principal o novo cliente
-        $this->arrayClientes[] = $novo_cliente;
+        $clientes[] = $novo_cliente;
+
+        // gravar na sessão novamente
+        session(['clientes' => $clientes]);
 
         // parametro para a lista de clientes cadastrados
-        $clientes = $this->arrayClientes;
+        //$clientes = $this->arrayClientes;
 
         // imprime o array (debug)
         //dd($this->arrayClientes);
-        return view("clientes.index", compact(['clientes']));
+        //return view("clientes.index", compact(['clientes']));
 
-        //return redirect()->route("clientes.index");
+        return redirect()->route("clientes.index");
 
     }
 
