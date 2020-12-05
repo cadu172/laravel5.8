@@ -96,6 +96,14 @@ class ClienteControlador extends Controller
     public function show($id)
     {
         //
+        $clientes = session('clientes');
+        
+        // obtem o cliente na posição do index indicado
+        $cliente = $clientes[$id];
+
+        // retorna a view com os dados do cliente localizado
+        return(view("clientes.show",compact(['cliente'])));
+
     }
 
     /**

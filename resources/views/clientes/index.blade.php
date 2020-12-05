@@ -12,7 +12,13 @@
 
 <ul>
 @foreach ($clientes as $item)
-    <li>{{ $item['nome'] }}&nbsp;|&nbsp;<a href="{{route('clientes.edit',$item['id'])}}">Editar</a></li>
+    <li>
+        {{ $item['nome'] }}
+        &nbsp;|&nbsp;
+        <a href="{{route('clientes.edit',$item['id'])}}">Editar</a>
+        &nbsp;|&nbsp;
+        <a href="{{route('clientes.show',$item['id'])}}">Informações</a>
+    </li>
 @endforeach    
 </ul>
 </body>
