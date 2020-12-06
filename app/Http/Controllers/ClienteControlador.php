@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Facade\FlareClient\View;
 use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\Return_;
 
@@ -21,7 +22,7 @@ class ClienteControlador extends Controller
 
         $clientes = session("clientes");
         
-        if ( ( ! isset($clientes) ) || ( count($clientes)==0 ) )
+        if ( ! isset($clientes) )
         {
             session(["clientes" => $this->arrayClientes]);
         }
@@ -35,16 +36,33 @@ class ClienteControlador extends Controller
     public function index()
     {
         
-        //$clientes = $this->arrayClientes;
-        //session(["clientes"=>$clientes]);
+        // obtem o array que esta na session
+        $clientes = session('clientes');            
         
-        
-        $clientes = session('clientes');                
+        $titulo = "Listagem de Clientes Cadastrados";
 
         //dd($clientes);
         
-        //
-        return view("clientes.index", compact(["clientes"]));
+        // #### primeira forma de passar parametros para uma view
+        //return view("clientes.index", compact(["clientes"]));
+        //return View("clientes.index", compact(["clientes","titulo"]));
+
+        // #### segunda forma de passar parametros para uma view
+        /*return (
+            view("clientes.index")
+                ->with("clientes",$clientes)
+                ->with("titulo",$titulo)
+        );*/
+
+        // #### terceira forma de enviar informações pela View
+        return (
+            View("clientes.index",
+                [
+                    "clientes"  =>  $clientes,
+                    "titulo"    =>  $titulo
+                ])
+            );
+
     }
 
     /**
@@ -68,10 +86,18 @@ class ClienteControlador extends Controller
     {
         // obtem os dados da sessao
         $clientes = session("clientes");
+
+        // inicializar id do cliente
+        $novo_id = 1;
+
+        if ( count( $clientes ) > 0 )
+        {
+            $novo_id = end($clientes)["id"]+1;
+        }
         
         // cria um novo registro com detalhes do formulário
         $novo_cliente = [
-            "id" => end($clientes)["id"]+1,
+            "id" => $novo_id, // a função end retorna a informação da ultima posição de uma matriz
             "nome" => $request->nome
         ];
 
