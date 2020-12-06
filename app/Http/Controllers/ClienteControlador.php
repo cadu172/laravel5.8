@@ -10,18 +10,20 @@ class ClienteControlador extends Controller
     
     private $arrayClientes = [
         ['id'=>1, 'nome'=>'Carlos'],
-        ['id'=>1, 'nome'=>'Eduardo'],
-        ['id'=>1, 'nome'=>'dos Santos'],
-        ['id'=>1, 'nome'=>'Roberto']
+        ['id'=>2, 'nome'=>'Eduardo'],
+        ['id'=>3, 'nome'=>'dos Santos'],
+        ['id'=>4, 'nome'=>'Roberto']
     ];
 
     public function __construct() {
+
+        //session(["clientes" => []]);
+
+        $clientes = session("clientes");
         
-        $clientes = session('clientes');
-        
-        if ( ! isset($clientes) )
+        if ( ( ! isset($clientes) ) || ( count($clientes)==0 ) )
         {
-            session(['clientes' => $this->arrayClientes]);
+            session(["clientes" => $this->arrayClientes]);
         }
     }
     
@@ -34,12 +36,15 @@ class ClienteControlador extends Controller
     {
         
         //$clientes = $this->arrayClientes;
-        $clientes = session('clientes');
+        //session(["clientes"=>$clientes]);
+        
+        
+        $clientes = session('clientes');                
 
         //dd($clientes);
         
         //
-        return view('clientes.index', compact(['clientes']));
+        return view("clientes.index", compact(["clientes"]));
     }
 
     /**
@@ -62,19 +67,19 @@ class ClienteControlador extends Controller
     public function store(Request $request)
     {
         // obtem os dados da sessao
-        $clientes = session('clientes');
+        $clientes = session("clientes");
         
         // cria um novo registro com detalhes do formulário
         $novo_cliente = [
-            'id' => count($clientes)+1,
-            'nome' => $request->nome
+            "id" => end($clientes)["id"]+1,
+            "nome" => $request->nome
         ];
 
         // adiciona ao array principal o novo cliente
         $clientes[] = $novo_cliente;
 
         // gravar na sessão novamente
-        session(['clientes' => $clientes]);
+        session(["clientes" => $clientes]);
 
         // parametro para a lista de clientes cadastrados
         //$clientes = $this->arrayClientes;
@@ -96,13 +101,14 @@ class ClienteControlador extends Controller
     public function show($id)
     {
         //
-        $clientes = session('clientes');
+        $clientes = session("clientes");
         
         // obtem o cliente na posição do index indicado
-        $cliente = $clientes[$id];
+        //$cliente = $clientes[$id-1];
+        $cliente = $clientes[$this->getIndexCliente($clientes,$id)];
 
         // retorna a view com os dados do cliente localizado
-        return(view("clientes.show",compact(['cliente'])));
+        return(view("clientes.show",compact(["cliente"])));
 
     }
 
@@ -115,6 +121,13 @@ class ClienteControlador extends Controller
     public function edit($id)
     {
         //
+        $clientes = session("clientes");
+
+        // obtem o cliente na posição do index indicado
+        $cliente = $clientes[$this->getIndexCliente($clientes,$id)];
+
+        // retorna a view com os dados do cliente localizado
+        return(view("clientes.edit",compact(["cliente"])));
     }
 
     /**
@@ -126,7 +139,18 @@ class ClienteControlador extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        // obtem a relação atual de clientes
+        $clientes = session("clientes");
+        
+        // gravar os dados na posição encontrada
+        $clientes[$this->getIndexCliente($clientes,$id)]["nome"] = $request->nome;
+        
+        // regravar os dados na sessão
+        session(["clientes"=>$clientes]);
+        
+        // redirecionar para a página inicial com a listagem de clientes
+        return redirect()->route("clientes.index"); 
     }
 
     /**
@@ -137,6 +161,30 @@ class ClienteControlador extends Controller
      */
     public function destroy($id)
     {
-        //
+        // obtem a relação atual de clientes
+        $clientes = session("clientes");
+        
+        // obtem o indice do cliente, com base no id informado
+        $index = $this->getIndexCliente($clientes,$id);
+        
+        // remove da matriz o id localizado
+        array_splice($clientes, $index, 1);
+        
+        // regravar os dados na sessão
+        session(["clientes"=>$clientes]);
+        
+        // redirecionar para a página inicial com a listagem de clientes
+        return (
+            redirect()->route("clientes.index")
+        );
+    }
+
+    /**
+     * Retorna um indice em uma matriz, com base no id do cliente
+     */
+    function getIndexCliente($array_source, $id) {        
+        $ids = array_column($array_source, "id");
+        $index = array_search($id, $ids);
+        return $index;
     }
 }

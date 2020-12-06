@@ -13,11 +13,18 @@
 <ul>
 @foreach ($clientes as $item)
     <li>
-        {{ $item['nome'] }}
+        {{ $item['id'] }}&nbsp;-&nbsp;{{ $item['nome'] }}
         &nbsp;|&nbsp;
         <a href="{{route('clientes.edit',$item['id'])}}">Editar</a>
         &nbsp;|&nbsp;
         <a href="{{route('clientes.show',$item['id'])}}">Informações</a>
+        <form action="{{route("clientes.destroy",$item["id"])}}}" method="POST">
+            @csrf
+            @method("delete")
+            <button type="submit"
+                name="BtnExcluir">Excluir</button>
+
+        </form>
     </li>
 @endforeach    
 </ul>
