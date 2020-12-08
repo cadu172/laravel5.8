@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{$titulo}}</title>
-</head>
-<body>
-
+@extends('layouts.principal')
+@section('conteudo')
+    
 <h2>{{$titulo}}</h2>
 
 @if ( (isset($clientes)) && (count($clientes)>0) )
@@ -38,5 +31,4 @@
 
 <hr />
 <a href="{{route('clientes.create')}}">NOVO CLIENTE</a><br />
-</body>
-</html>
+@endsection
