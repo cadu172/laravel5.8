@@ -12,9 +12,14 @@
         <div class="col1">
             <div class="menu">
                 <ul>
-                    <li class="active"><a href="{{route("clientes.index")}}">Clientes</a></li>
-                    <li><a href="">Produtos</a></li>
-                    <li><a href="">Departamentos</a></li>
+                    <li><a class="{{request()->routeIs('clientes.*')?'active':''}}"
+                        href="{{route("clientes.index")}}">Clientes</a></li>
+                    
+                    <li><a class="{{request()->routeIs('produtos')?'active':''}}"
+                        href="{{route("produtos")}}">Produtos</a></li>
+                    
+                    <li><a class="{{request()->routeIs('departamentos')?'active':''}}"
+                        href="{{route("departamentos")}}">Departamentos</a></li>
                 </ul>
             </div>
         </div>

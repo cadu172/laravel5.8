@@ -21,6 +21,21 @@ Route::get('/', function () {
 });
 
 
+Route::prefix('07_view')->group(function(){
+    
+    Route::get("departamentos",function(){
+        return view(
+            "outras.departamentos"
+        );
+    })->name("departamentos");
+    
+    Route::get("produtos",function(){
+        return view(
+            "outras.produtos"
+        );
+    })->name("produtos");
+});
+
 Route::prefix('06_controladores')->group(function(){
     
     Route::get('/', function() {
