@@ -22,6 +22,31 @@
         </li>
     @endforeach    
     </ul>
+
+    <h3>For Simples</h3>
+    @for ($i = 0; $i < 10; $i++)        
+        {{$i}},
+    @endfor
+
+
+    <h3>For para impressão do array</h3>
+    @for ($i = 0; $i < count($clientes); $i++)
+        <p>{{$clientes[$i]["nome"]}}</p>
+    @endfor
+
+    <h3>Foreach para leitura do array</h3>
+    @foreach ($clientes as $item)        
+        @if ($loop->first)       
+            <p>{{$loop->index}} => <strong>Primeiro: {{$item["nome"]}}</strong></p>      
+        @else
+            @if ($loop->last)                    
+                <p>{{$loop->index}} => <strong>Último: {{$item["nome"]}}</strong></p>      
+            @else
+                <p>{{$loop->index}} => {{$item["nome"]}}</p>      
+            @endif
+        @endif        
+    @endforeach        
+    
    
 @else
     
