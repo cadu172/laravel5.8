@@ -1,5 +1,5 @@
-
 @extends('layouts.principal')
+@section('titulo','produtos.blade.php')    
 @section('conteudo')    
     <h3>Produtos</h3>
     <ul>

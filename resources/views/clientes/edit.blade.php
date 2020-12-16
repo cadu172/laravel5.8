@@ -1,4 +1,5 @@
 @extends('layouts.principal')
+@section('titulo','edit.blade.php')    
 @section('conteudo')
     <h3>Edição de Informações</h3>
     <form action="{{route("clientes.update",$cliente["id"])}}" method="POST">

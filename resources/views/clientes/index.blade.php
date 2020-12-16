@@ -1,5 +1,7 @@
 @extends('layouts.principal')
+@section('titulo','index.blade.php')    
 @section('conteudo')
+
     
 <h2>{{$titulo}}</h2>
 

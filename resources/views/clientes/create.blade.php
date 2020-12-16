@@ -1,4 +1,5 @@
 @extends('layouts.principal')
+@section('titulo','create.blade.php')    
 @section('conteudo')
     <h2>Inclusão de Novo Cliente</h2>
     <form action="{{route('clientes.store')}}" method="POST">

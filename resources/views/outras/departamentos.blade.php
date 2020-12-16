@@ -1,5 +1,5 @@
-
 @extends('layouts.principal')
+@section('titulo','departamento.blade.php')    
 @section('conteudo')    
     <h3>Departamentos</h3>
     <ul>
@@ -10,5 +10,10 @@
         <li>Control-Desk</li>
         <li>Cobrança</li>
         <li>Administrativo</li>
-    </ul>    
+    </ul>
+    <x-Alerta tipo="info" titulo="Titulo da minha Caixa de mensagem" mensagem="Deu erro aqui neste trecho de código" />
+    <x-Alerta tipo="warning" titulo="Titulo da minha Caixa de mensagem" mensagem="Deu erro aqui neste trecho de código" />
+    <x-Alerta tipo="success" titulo="Titulo da minha Caixa de mensagem" mensagem="Deu erro aqui neste trecho de código" />
+    <x-Alerta tipo="error" titulo="Titulo da minha Caixa de mensagem" mensagem="Deu erro aqui neste trecho de código" />
+
 @endsection('conteudo')
