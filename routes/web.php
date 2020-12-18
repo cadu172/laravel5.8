@@ -22,22 +22,30 @@ Route::get('/', function () {
 
 
 Route::prefix('07_view')->group(function(){
-    
+
     Route::get("departamentos",function(){
         return view(
             "outras.departamentos"
         );
     })->name("departamentos");
-    
+
     Route::get("produtos",function(){
         return view(
             "outras.produtos"
         );
     })->name("produtos");
+
+    Route::get("opcoes/{opcao?}",function($opcao=null){
+        return view(
+            "outras.opcoes",
+            compact(['opcao'])
+        );
+    })->name("opcoes");
+
 });
 
 Route::prefix('06_controladores')->group(function(){
-    
+
     Route::get('/', function() {
         return("Criando controladores");
     });
@@ -130,7 +138,7 @@ Route::prefix('05_rotas')->group(function() {
     });
 
     Route::prefix('aula17')->group( function() {
-        
+
         // redirecionamento usando a URI fixa
         Route::redirect('listaprodutos1', '/aula16/meusprodutos', 301);
 
@@ -142,31 +150,31 @@ Route::prefix('05_rotas')->group(function() {
 
 
     Route::prefix('aula18')->group(function(){
-        
+
         Route::post('requisicoes', function(Request $req) {
             return "Método POST executado";
         });
 
         Route::get('requisicoes', function(Request $req) {
             return "Método GET executado";
-        });    
+        });
 
         Route::delete('requisicoes', function(Request $req) {
             return "Método DELETE executado";
-        }); 
-        
+        });
+
         Route::options('requisicoes', function(Request $req) {
             return "Método OPTIONS executado";
         });
-        
+
         Route::patch('requisicoes', function(Request $req) {
             return "Método PATCH executado";
-        });        
-        
+        });
+
         Route::put('requisicoes', function(Request $req) {
             return "Método PUT executado";
         });
 
-    });    
+    });
 
 });
