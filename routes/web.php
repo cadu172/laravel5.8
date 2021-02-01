@@ -20,7 +20,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
 Route::prefix('07_view')->group(function(){
 
     Route::get("departamentos",function(){
@@ -41,6 +40,11 @@ Route::prefix('07_view')->group(function(){
             compact(['opcao'])
         );
     })->name("opcoes");
+
+    Route::get('bootstrap', function() {
+        return view("outras.usando_bootstrap");
+    });
+    
 
 });
 
